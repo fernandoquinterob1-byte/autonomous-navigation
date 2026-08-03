@@ -1,0 +1,110 @@
+costmap_node:
+  ros__parameters:
+    use_sim_time: true
+    map_yaml_path: package://amcl_launch/map/depot.yaml
+    global_frame: map
+    robot_base_frame: base_link
+    robot_radius: 0.30
+    inflation_radius: 0.40
+    occupied_cost: 100
+    inflated_cost: 80
+    free_cost: 0
+    unknown_cost: -1
+    publish_frequency: 1.0
+
+# Perfil activo Paso 2: balanceado.
+# Objetivo: seguimiento suave del path global con baja oscilacion y margen ante obstaculos.
+rrt_star_node:
+  ros__parameters:
+    use_sim_time: true
+    enabled: true
+    global_frame: map
+    pose_topic: /ground_truth_pose
+    costmap_topic: /final/inflated_costmap
+    goal_topic: /final/goal_pose
+    plan_on_start: false
+    default_goal_x: 10.0
+    default_goal_y: 0.0
+    max_iterations: 4000
+    step_size: 0.35
+    goal_tolerance: 0.35
+    goal_sample_rate: 0.10
+    search_radius: 0.90
+    collision_check_resolution: 0.05
+    occupied_threshold: 50
+    planning_timeout: 6.0
+    publish_tree: true
+    publish_nodes: true
+
+dwa_node:
+  ros__parameters:
+    use_sim_time: true
+    enabled: true
+    global_frame: map
+    control_frequency: 10.0
+    prediction_time: 2.5
+    dt: 0.1
+    v_min: 0.0
+    v_max: 0.25
+    w_min: -0.8
+    w_max: 0.8
+    v_samples: 6
+    w_samples: 15
+    lookahead_distance: 1.2
+    goal_tolerance_xy: 0.20
+    goal_tolerance_yaw: 0.12
+    yaw_alignment_kp: 0.8
+    yaw_alignment_min_w: 0.04
+    yaw_alignment_max_w: 0.35
+    collision_distance: 0.25
+    safety_distance: 0.50
+    occupied_threshold: 80
+    goal_weight: 1.5
+    path_weight: 0.8
+    obstacle_weight: 4.0
+    heading_weight: 0.4
+    velocity_weight: 1.5
+    turn_switch_penalty: 2.0
+    rotation_only_penalty: 1.0
+    recovery_enabled: true
+    recovery_stuck_timeout: 2.0
+    recovery_progress_distance: 0.04
+    recovery_trigger_distance: 0.90
+    recovery_front_clearance: 0.55
+    recovery_follow_distance: 0.45
+    recovery_forward_speed: 0.15
+    recovery_turn_speed: 0.32
+    recovery_side_kp: 1.2
+    recovery_max_w: 0.40
+    recovery_min_travel: 0.60
+    recovery_switch_timeout: 8.0
+    recovery_turn_timeout: 12.0
+    recovery_timeout: 180.0
+    recovery_prediction_time: 1.0
+    require_scan: false
+    use_costmap_collision: true
+    use_scan_collision: true
+    publish_local_trajectories: true
+
+trajectory_recorder:
+  ros__parameters:
+    use_sim_time: true
+    enabled: true
+    publish_frequency: 5.0
+    save_csv: true
+    sample_min_distance: 0.01
+    save_plots: true
+    output_dir: /home/fernando-quintero/Descargas/navegacion/final_navigation/results
+    figures_dir: /home/fernando-quintero/Descargas/navegacion/final_navigation/results/figures
+    global_frame: map
+
+navigation_manager:
+  ros__parameters:
+    use_sim_time: true
+    enabled: true
+    status_frequency: 5.0
+    goal_tolerance_xy: 0.25
+    collision_distance: 0.15
+    collision_risk_distance: 0.25
+    no_valid_trajectory_timeout: 3.0
+    publish_stop_on_collision: true

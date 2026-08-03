@@ -1,0 +1,6 @@
+# Python dependencies used by final_navigation.
+# ROS 2 dependencies are installed through apt/rosdep; see README.md.
+PyYAML>=6.0
+numpy>=1.26
+matplotlib>=3.6
+setuptools>=68.0
