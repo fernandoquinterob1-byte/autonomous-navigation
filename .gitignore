@@ -7,7 +7,9 @@ __pycache__/
 *.pyo
 *.egg-info/
 .pytest_cache/
-.csv
+*.csv
+debug_paso1/
+
 *.bag
 *.db3
 
